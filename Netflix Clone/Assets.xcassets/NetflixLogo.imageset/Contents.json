@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "Netflix Logo Png Symbol  PNG Transparent With Clear Background ID 471554 png - Free PNG Images.jpeg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
