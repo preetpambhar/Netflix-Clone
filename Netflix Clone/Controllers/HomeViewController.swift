@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
         homeFeedTable.delegate = self
         homeFeedTable.dataSource = self
         configureNavbar()
-        getTrendingMovies()
+        getTrendingTvs()
         
         let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         homeFeedTable.tableHeaderView = headerView
@@ -50,15 +50,27 @@ class HomeViewController: UIViewController {
         homeFeedTable.frame = view.bounds
     }
     
-    private func getTrendingMovies(){
-        APICaller.shared.getTrendingMovies{
-            results in
-            switch results{
-            case.success(let movies):
-                print(movies)
-            case .failure(let error):
-                print(error)
-            }
+    private func getTrendingTvs(){
+//        APICaller.shared.getTrendingMovies{
+//            results in
+//            switch results{
+//            case.success(let movies):
+//                print(movies)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//        APICaller.shared.getTrendingTvs { results in
+//            //
+//        }
+//        APICaller.shared.getUpcomoingMovies { _ in
+//            //
+//        }
+//        APICaller.shared.getPopular{ _ in
+//            //
+//        }
+        APICaller.shared.getTopRated{ _ in
+            //
         }
     }
 }
