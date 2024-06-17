@@ -19,6 +19,8 @@
 		19331CFC2C14204100B1C460 /* CollectionViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19331CFB2C14204100B1C460 /* CollectionViewTableViewCell.swift */; };
 		19331CFE2C15734100B1C460 /* HeroHeaderUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19331CFD2C15734100B1C460 /* HeroHeaderUIView.swift */; };
 		19331D002C1D659100B1C460 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19331CFF2C1D659100B1C460 /* APICaller.swift */; };
+		19331D022C1EA86A00B1C460 /* Movie .swift in Sources */ = {isa = PBXBuildFile; fileRef = 19331D012C1EA86A00B1C460 /* Movie .swift */; };
+		19331D042C1FFC4800B1C460 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19331D032C1FFC4800B1C460 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		19331CFB2C14204100B1C460 /* CollectionViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableViewCell.swift; sourceTree = "<group>"; };
 		19331CFD2C15734100B1C460 /* HeroHeaderUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroHeaderUIView.swift; sourceTree = "<group>"; };
 		19331CFF2C1D659100B1C460 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		19331D012C1EA86A00B1C460 /* Movie .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie .swift"; sourceTree = "<group>"; };
+		19331D032C1FFC4800B1C460 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,7 @@
 		19331CF82C141F9100B1C460 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				19331D012C1EA86A00B1C460 /* Movie .swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -121,6 +126,7 @@
 		19331CF92C141FC500B1C460 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				19331D032C1FFC4800B1C460 /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -210,7 +216,9 @@
 				19331CFE2C15734100B1C460 /* HeroHeaderUIView.swift in Sources */,
 				19331CF52C11682B00B1C460 /* DownloadsViewController.swift in Sources */,
 				19331CDA2C1161DE00B1C460 /* AppDelegate.swift in Sources */,
+				19331D042C1FFC4800B1C460 /* Extensions.swift in Sources */,
 				19331CDC2C1161DE00B1C460 /* SceneDelegate.swift in Sources */,
+				19331D022C1EA86A00B1C460 /* Movie .swift in Sources */,
 				19331CF12C1167CC00B1C460 /* UpcomingViewController.swift in Sources */,
 				19331CEF2C11679C00B1C460 /* HomeViewController.swift in Sources */,
 			);
