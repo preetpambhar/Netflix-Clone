@@ -26,6 +26,7 @@
 		19331D0D2C20E2F600B1C460 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 19331D0C2C20E2F600B1C460 /* SDWebImageMapKit */; };
 		19331D0F2C22A48A00B1C460 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19331D0E2C22A48A00B1C460 /* TitleTableViewCell.swift */; };
 		19331D112C23867E00B1C460 /* TitleViewModel .swift in Sources */ = {isa = PBXBuildFile; fileRef = 19331D102C23867E00B1C460 /* TitleViewModel .swift */; };
+		19331D132C26326E00B1C460 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19331D122C26326E00B1C460 /* SearchResultsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		19331D072C20E0C600B1C460 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		19331D0E2C22A48A00B1C460 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		19331D102C23867E00B1C460 /* TitleViewModel .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TitleViewModel .swift"; sourceTree = "<group>"; };
+		19331D122C26326E00B1C460 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +92,6 @@
 				19331CED2C11675600B1C460 /* Controllers */,
 				19331CD92C1161DE00B1C460 /* AppDelegate.swift */,
 				19331CDB2C1161DE00B1C460 /* SceneDelegate.swift */,
-				19331CDD2C1161DE00B1C460 /* MainTabBarViewController.swift */,
 				19331CE22C1161E000B1C460 /* Assets.xcassets */,
 				19331CE42C1161E000B1C460 /* LaunchScreen.storyboard */,
 				19331CE72C1161E000B1C460 /* Info.plist */,
@@ -101,10 +102,8 @@
 		19331CED2C11675600B1C460 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				19331CEE2C11679C00B1C460 /* HomeViewController.swift */,
-				19331CF02C1167CC00B1C460 /* UpcomingViewController.swift */,
-				19331CF22C1167FC00B1C460 /* SearchViewController.swift */,
-				19331CF42C11682B00B1C460 /* DownloadsViewController.swift */,
+				19331D152C2632DB00B1C460 /* General */,
+				19331D142C2632AA00B1C460 /* Core */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -150,6 +149,26 @@
 				19331CFF2C1D659100B1C460 /* APICaller.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		19331D142C2632AA00B1C460 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				19331CF42C11682B00B1C460 /* DownloadsViewController.swift */,
+				19331CEE2C11679C00B1C460 /* HomeViewController.swift */,
+				19331CF02C1167CC00B1C460 /* UpcomingViewController.swift */,
+				19331CF22C1167FC00B1C460 /* SearchViewController.swift */,
+				19331CDD2C1161DE00B1C460 /* MainTabBarViewController.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		19331D152C2632DB00B1C460 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				19331D122C26326E00B1C460 /* SearchResultsViewController.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,6 +257,7 @@
 				19331D002C1D659100B1C460 /* APICaller.swift in Sources */,
 				19331CFE2C15734100B1C460 /* HeroHeaderUIView.swift in Sources */,
 				19331CF52C11682B00B1C460 /* DownloadsViewController.swift in Sources */,
+				19331D132C26326E00B1C460 /* SearchResultsViewController.swift in Sources */,
 				19331CDA2C1161DE00B1C460 /* AppDelegate.swift in Sources */,
 				19331D042C1FFC4800B1C460 /* Extensions.swift in Sources */,
 				19331CDC2C1161DE00B1C460 /* SceneDelegate.swift in Sources */,
