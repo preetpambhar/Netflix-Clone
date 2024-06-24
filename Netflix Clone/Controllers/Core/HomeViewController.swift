@@ -16,6 +16,9 @@ enum Sections: Int {
 }
 
 class HomeViewController: UIViewController {
+    
+    private var randomTrendingMovie: Title?
+    private var headerView: HeroHeaderUIView?
 
     let sectionTitles: [String] = ["Trending Movies","Trending Tv", "Popular", "Upcoming Movies","Top Rated"]
     
@@ -35,16 +38,31 @@ class HomeViewController: UIViewController {
         configureNavbar()
         //getTrendingTvs()
         
-        let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         homeFeedTable.tableHeaderView = headerView
        
-    
+        configureHeroHeader()
     }
     
+    private func configureHeroHeader(){
+        APICaller.shared.getTrendingMovies {[weak self] result in
+            switch result {
+            case .success(let titles):
+                let selectedtitle = titles.randomElement()
+                self?.randomTrendingMovie = selectedtitle
+                self?.headerView?.configure(with: TitleViewModel(titleName: selectedtitle?.original_title ?? "", posterURL: selectedtitle?.poster_path ?? ""))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
     private func configureNavbar(){
        var image = UIImage(named:"netflixLogo")
         //var image = UIImage(systemName: "person")
         image = image?.withRenderingMode(.alwaysOriginal)
+        //image = image?.sd_resizedImage(with: .zero, scaleMode: .aspectFill)
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
