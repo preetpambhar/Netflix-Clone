@@ -57,18 +57,52 @@ class HomeViewController: UIViewController {
         }
         
     }
-    private func configureNavbar(){
-       var image = UIImage(named:"netflixLogo")
-        //var image = UIImage(systemName: "person")
-        image = image?.withRenderingMode(.alwaysOriginal)
-        //image = image?.sd_resizedImage(with: .zero, scaleMode: .aspectFill)
+    private func configureNavbar() {
+        // Load the Netflix logo image
+        guard let originalImage = UIImage(named: "NewNetflixLogo") else {
+            print("Failed to load Netflix logo")
+            return
+        }
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
+        let targetSize = CGSize(width: 30, height: 30)
+        let resizedImage = resizeImage(image: originalImage, targetSize: targetSize)
+        let finalImage = resizedImage.withRenderingMode(.alwaysOriginal)
+        
+        let logoItem = UIBarButtonItem(image: finalImage, style: .plain, target: self, action: nil)
+        
+        navigationItem.leftBarButtonItem = logoItem
+        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
             UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
         ]
+        
         navigationController?.navigationBar.tintColor = .white
+        
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = nil
+    }
+
+    // Helper function to resize the image
+    private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Determine the scale factor that preserves aspect ratio
+        let scaleFactor = min(widthRatio, heightRatio)
+        
+        // Compute the new image size that preserves aspect ratio
+        let scaledImageSize = CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor)
+        
+        // Create a new image context and draw the resized image
+        UIGraphicsBeginImageContextWithOptions(scaledImageSize, false, 0.0)
+        image.draw(in: CGRect(origin: .zero, size: scaledImageSize))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return resizedImage!
     }
     
     override func viewDidLayoutSubviews() {
