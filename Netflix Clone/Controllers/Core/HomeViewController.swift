@@ -77,7 +77,12 @@ class HomeViewController: UIViewController {
             UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
         ]
         
-        navigationController?.navigationBar.tintColor = .white
+        if traitCollection.userInterfaceStyle == .dark {
+                navigationController?.navigationBar.tintColor = .white
+            } else {
+                navigationController?.navigationBar.tintColor = .black
+            }
+        
         
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = nil
