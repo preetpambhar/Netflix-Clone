@@ -14,7 +14,7 @@ class TitleCollectionViewCell: UICollectionViewCell {
     
     private let posterImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -24,7 +24,7 @@ class TitleCollectionViewCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError()
+        fatalError() 
     }
     
     override func layoutSubviews(){
@@ -33,8 +33,8 @@ class TitleCollectionViewCell: UICollectionViewCell {
     }
     
     public func configure(with model: String){
-        guard let url  = URL(string: "https://image.tmdb.org/t/p/original\(model)") else {return}
-        
+       guard let url  = URL(string: "\(model)") else {return}
         posterImageView.sd_setImage(with: url, completed: nil)
+     print(model)
     }
 }

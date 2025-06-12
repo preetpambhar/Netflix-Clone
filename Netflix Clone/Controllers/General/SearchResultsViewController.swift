@@ -67,7 +67,7 @@ extension SearchResultsViewController: UICollectionViewDelegate, UICollectionVie
             switch result {
             case .success(let videoElement):
              
-                    self?.delegate?.searchResultsViewControllerDidTapItem(TitlePreviewViewModel(title: titleName, youtubeView: videoElement, titleOverview: title.overview ?? ""))
+                self?.delegate?.searchResultsViewControllerDidTapItem(TitlePreviewViewModel(title: titleName, youtubeView: videoElement, description: title.overview ?? ""))
                 
             case .failure(let error):
                 print(error.localizedDescription)

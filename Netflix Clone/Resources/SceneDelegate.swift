@@ -13,12 +13,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-  
-        guard let windowScence = (scene as? UIWindowScene) else { return }
-        window  = UIWindow(frame: windowScence.coordinateSpace.bounds)
-        window?.windowScene = windowScence
-        window?.rootViewController = MainTabBarViewController()
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+
+        window = UIWindow(windowScene: windowScene)
+        
+        // Show splash screen first
+        let splashVC = SplashViewController()
+        window?.rootViewController = splashVC
         window?.makeKeyAndVisible()
+
+        // After delay, show main screen
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let mainVC = MainTabBarViewController()
+            self.window?.rootViewController = mainVC
+
+            // Optional animation
+            UIView.transition(with: self.window!,
+                              duration: 0.5,
+                              options: .transitionCrossDissolve,
+                              animations: nil,
+                              completion: nil)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -9,18 +9,21 @@ import UIKit
 
 enum Sections: Int {
     case TrendingMovies = 0
-    case TrendingTv = 1
-    case Popular =  2
+    case TrendingTv = 2
+    //case Popular =  3
     case Upcoming = 3
-    case TopRated = 4
+   // case TopRated = 5
+    case YTVideos = 1
 }
 
 class HomeViewController: UIViewController {
     
     private var randomTrendingMovie: Title?
     private var headerView: HeroHeaderUIView?
+   
 
-    let sectionTitles: [String] = ["Trending Movies","Trending Tv", "Popular", "Upcoming Movies","Top Rated"]
+//    let sectionTitles: [String] = ["Trending Movies","Trending Tv", "Popular", "Upcoming Movies","YT Videos"]
+    let sectionTitles: [String] = ["Trending Videos","Most Liked Videos","Suggestions"]
     
     private let homeFeedTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -37,13 +40,29 @@ class HomeViewController: UIViewController {
         homeFeedTable.dataSource = self
         configureNavbar()
         //getTrendingTvs()
+       // getTopLikedVideoTest()
+        APICaller.shared.ViewVideo(with: "1gycJH2fjPk") { result in
+            
+        }
         
         headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         homeFeedTable.tableHeaderView = headerView
-       
+        
         configureHeroHeader()
     }
     
+    private func getTopLikedVideoTest(){
+        APICaller.shared.fetchVideos { result in
+            switch result {
+                  case .success(let videos):
+                      // Process the videos
+                print("Fetched videos: \(videos[0].snippet.title)")
+                  case .failure(let error):
+                      // Handle the error
+                      print("Failed to fetch videos: \(error)")
+                  }
+        }
+    }
     private func configureHeroHeader(){
         APICaller.shared.getTrendingMovies {[weak self] result in
             switch result {
@@ -57,33 +76,83 @@ class HomeViewController: UIViewController {
         }
         
     }
+//    private func configureNavbar(){
+//       // var image = UIImage(named:"Netflix")
+//        var image = UIImage(named: "Logo")
+//        guard let image = image?.withRenderingMode(.alwaysOriginal) else {
+//            print("Failed to load Netflix logo")
+//            return
+//        }
+//        
+//        
+//        //image = image?.sd_resizedImage(with: .zero, scaleMode: .aspectFill)
+//        
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
+//        navigationItem.rightBarButtonItems = [
+//            UIBarButtonItem(title:"Swashray", style: .done, target: self, action: nil),
+//           // UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+//        ]
+//        navigationController?.navigationBar.tintColor = .white
+//    }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        // Check if the user interface style has changed
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            // Reconfigure the navigation bar based on the new appearance
+            configureNavbar()
+            homeFeedTable.reloadData()
+        }
+    }
+
+    
     private func configureNavbar() {
         // Load the Netflix logo image
-        guard let originalImage = UIImage(named: "NewNetflixLogo") else {
-            print("Failed to load Netflix logo")
-            return
-        }
-        
+        let originalImage: UIImage
+            
+            // Check the interface style (dark or light mode) and load the respective logo
+            if traitCollection.userInterfaceStyle == .dark {
+                guard let blackLogo = UIImage(named: "WhiteLogo") else {
+                    print("Failed to load black Netflix logo")
+                    return
+                }
+                originalImage = blackLogo
+            } else {
+                guard let whiteLogo = UIImage(named: "BlackLogo") else {
+                    print("Failed to load white Netflix logo")
+                    return
+                }
+                originalImage = whiteLogo
+            }
+//        guard let originalImage = UIImage(named: "BlackLogo") else {
+//            print("Failed to load Netflix logo")
+//            return
+//        }
+
         let targetSize = CGSize(width: 30, height: 30)
         let resizedImage = resizeImage(image: originalImage, targetSize: targetSize)
         let finalImage = resizedImage.withRenderingMode(.alwaysOriginal)
-        
+
         let logoItem = UIBarButtonItem(image: finalImage, style: .plain, target: self, action: nil)
-        
+
         navigationItem.leftBarButtonItem = logoItem
-        
+
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
-            UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+//            UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
+//            UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+            UIBarButtonItem(title: "Swashray", style: .done, target: self, action: nil)
+                        
         ]
-        
+
         if traitCollection.userInterfaceStyle == .dark {
-                navigationController?.navigationBar.tintColor = .white
+                navigationController?.navigationBar.barTintColor = .black // Background color for dark mode
+                navigationController?.navigationBar.tintColor = .white    // Tint color for dark mode (icons)
             } else {
-                navigationController?.navigationBar.tintColor = .black
+                navigationController?.navigationBar.barTintColor = .white // Background color for light mode
+                navigationController?.navigationBar.tintColor = .black    // Tint color for light mode (icons)
             }
-        
-        
+
+
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = nil
     }
@@ -109,6 +178,9 @@ class HomeViewController: UIViewController {
         
         return resizedImage!
     }
+    
+
+
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -153,37 +225,58 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else { return  UITableViewCell()}
         
-        
+        // Set the parent view controller
+        cell.parentViewController = self
         cell.delegate = self
         
         switch indexPath.section {
         case Sections.TrendingMovies.rawValue:
-            APICaller.shared.getTrendingMovies{ result in
+            APICaller.shared.fetchMostViewVideos { result in
                 switch result{
-                case.success(let titles):
-                    cell.configure(with: titles)
+                case.success(let Video):
+                    cell.homeConfigure(with: Video)
+                        //print(result)
                 case.failure(let error):
                     print(error.localizedDescription)
+                    print("Error fetching top liked videos: \(error.localizedDescription)")
                 }
             }
         case Sections.TrendingTv.rawValue:
-            APICaller.shared.getTrendingTvs { result in
+            APICaller.shared.fetchVideos { result in
                 switch result{
-                case.success(let titles):
-                    cell.configure(with: titles)
+                case.success(let Video):
+                    cell.homeConfigure(with: Video)
+                        //print(result)
                 case.failure(let error):
                     print(error.localizedDescription)
+                    print("Error fetching top liked videos: \(error.localizedDescription)")
                 }
             }
-        case Sections.Popular.rawValue:
-            APICaller.shared.getPopular{ result in
-                switch result{
-                case.success(let titles):
-                    cell.configure(with: titles)
-                case.failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
+           
+        case Sections.YTVideos.rawValue:
+                        APICaller.shared.fetchVideos { result in
+                            switch result{
+                            case.success(let Video):
+                                cell.homeConfigure(with: Video)
+                                    //print(result)
+                            case.failure(let error):
+                                print(error.localizedDescription)
+                                print("Error fetching top liked videos: \(error.localizedDescription)")
+                            }
+                        }
+            
+            
+//        case Sections.Popular.rawValue:
+//            APICaller.shared.fetchVideos { result in
+//                switch result{
+//                case.success(let Video):
+//                    cell.homeConfigure(with: Video)
+//                        //print(result)
+//                case.failure(let error):
+//                    print(error.localizedDescription)
+//                    print("Error fetching top liked videos: \(error.localizedDescription)")
+//                }
+//            }
         case Sections.Upcoming.rawValue:
             APICaller.shared.getUpcomoingMovies{ result in
                 switch result{
@@ -193,27 +286,27 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
-        case Sections.TopRated.rawValue:
-            APICaller.shared.getTopRated{ result in
-                switch result{
-                case.success(let titles):
-                    cell.configure(with: titles)
-                case.failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
+//        case Sections.TopRated.rawValue:
+//            APICaller.shared.getTopRated{ result in
+//                switch result{
+//                case.success(let titles):
+//                    cell.configure(with: titles)
+//                case.failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//            }
+    
         default:
            return UITableViewCell()
         }
-        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        200
+        150
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        40
+        20
     }
     
     
@@ -221,7 +314,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         guard let header  = view  as? UITableViewHeaderFooterView else {return}
         header.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
         header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
-        header.textLabel?.textColor = .white
+       // header.textLabel?.textColor = .black
+        if traitCollection.userInterfaceStyle == .dark {
+                header.textLabel?.textColor = .white  // Light text for dark mode
+            } else {
+                header.textLabel?.textColor = .black  // Dark text for light mode
+            }
         header.textLabel?.text = header.textLabel?.text?.capitalizedFirstLetter()
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -238,7 +336,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension HomeViewController: CollectionViewTableViewCellDelegate  {
     func collectionViewTableViewCellDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: TitlePreviewViewModel) {
-        DispatchQueue.main.async{ [weak self] in 
+        DispatchQueue.main.async{ [weak self] in
             let vc = TitlePreviewViewController()
             vc.configure(with: viewModel)
             self?.navigationController?.pushViewController(vc, animated: true)
